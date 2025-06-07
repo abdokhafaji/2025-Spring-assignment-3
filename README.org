@@ -32,7 +32,10 @@ Steps in a summary:
    2.2. the second subplot holds frames vs the orientation of the robot 
 
 The orientation is calculated as
-$$\theta = \tan^{-1}\Bigg( \frac{\texttt{head}_y - \texttt{tail}_y}{\texttt{head}_x - \texttt{tail}_x} \Bigg)$$
+
+#+ATTR_HTML: :width 200px
+[[./equation.png]]
+
 where
 - $\texttt{head}_x$: x-location of the head in unit-length
 - $\texttt{head}_y$: y-location of the head in unit-length
