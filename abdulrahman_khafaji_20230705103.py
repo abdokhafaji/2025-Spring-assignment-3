@@ -1,20 +1,34 @@
-
 import numpy as np
+import matplotlib.pyplot as plt
 
-def find_students(table, min_score):
-    id_num = []
-    for row in table:
-        student_id = row[0]
-        scores = row[1:]
-        if np.any(scores >= min_score):
-            id_num.append(student_id)
-    id_num_array = np.array(id_num, dtype=np.int64)
-    tot_std = np.int64(len(id_num_array))
-    return id_num_array, tot_std
+# Load the CSV file
+data = np.loadtxt("01_trajectory.csv", delimiter=",")
 
-if __name__ == "__main__":
-    table = np.loadtxt("scores.csv", delimiter=",")
-    min_score = 90
-    id_num, tot_std = find_students(table, min_score)
-    print("IDs:", id_num)
-    print("Total:", tot_std)
+# Extract columns
+x_head = data[:, 0]
+y_head = data[:, 1]
+x_tail = data[:, 2]
+y_tail = data[:, 3]
+
+# Compute theta (orientation)
+theta = np.arctan2(y_head - y_tail, x_head - x_tail)
+
+# Plotting
+fig, axs = plt.subplots(1, 2, figsize=(12, 6))
+
+# Subplot 1: Head and Tail Positions
+axs[0].plot(x_head, y_head, 'r-', label='Head')
+axs[0].plot(x_tail, y_tail, 'b-', label='Tail')
+axs[0].set_title("Trajectory of the Robot")
+axs[0].set_xlabel("x-axis")
+axs[0].set_ylabel("y-axis")
+axs[0].legend()
+
+# Subplot 2: Orientation over Frames
+axs[1].plot(range(len(theta)), theta, 'g-')
+axs[1].set_title("Orientation of the Robot")
+axs[1].set_xlabel("Frame")
+axs[1].set_ylabel("Theta (rad)")
+
+plt.tight_layout()
+plt.show()
